@@ -95,6 +95,8 @@ li {
   text-align: center;
   border: none;
   color: purple;
+  display: none; 
+  
 }
 
 .menu__backdrop {
@@ -105,14 +107,23 @@ li {
   right: 0;
   bottom: 0;   /* or use 100vh and 100vw */
   z-index: 100;
-  /* display: flex; */
+  display: flex;
   justify-content: center;
   align-items: center;
-  display: none;
+  /* display: none; ----cannot transition opacity/flex while using display: none */
+  transition: opacity 300ms ease;    /* use all to target the menu's ability to fade-out */
+  opacity: 0;
+  visibility: hidden;  /*the backdrop is hidden instead of being completely gone. */ 
 }
 
 .menu--open .menu__backdrop {
-  display: flex;
+  visibility: visible;
+  opacity: 1;
+}
+
+.menu--open {
+  max-height: 100vh;    /* these ensure you are not able to scroll while the menu tab is open */
+  overflow-y: hidden;
 }
 
 .menu__links {
@@ -261,6 +272,7 @@ HIGHLIGHTS
 
 .highlight__wrapper {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .highlight {
@@ -268,7 +280,6 @@ HIGHLIGHTS
   width: calc(100% / 3);    /* row width set to 100% of the 1200 max width. the 3 highlighted sections are divided evenly and flex sits them side by side. */
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
 }
 
@@ -295,6 +306,7 @@ HIGHLIGHTS
 .highlight__subtitle {
   font-size: 20px;
   margin-bottom: 16px;
+  text-align: center;
 }
 
 /*
@@ -413,8 +425,49 @@ MEDIA
 
 */
 
+
+/* SMALL PHONES TABLETS AND LARGE SMARTPHONES */
+
+@media (max-width: 768px) {
+  .header__description {
+    padding: 0 24px ;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
+  h2 {
+    font-size: 26px;
+  }
+
+  button {
+    font-size: 18px;
+  }
+
+  .book {
+    width: 50%;    /*  originally was 25% (4) on each row, 
+    but 50% allows two on each row; */
+  }
+}
+
+/* SMALL PHONES AND LARGE SMARTPHONES */
+
 @media (max-width: 550px) {
   .nav__links{
-    display
+    display: none;
+  }
+
+  .btn__menu {
+    display: block;
+  }
+
+  .highlight {
+    width: 100%;  /* instead of --- width: calc(100% / 3)  because we want to stack the highlights 1by1 on smaller screens, not by 3 */
+    margin-bottom: 24px;
+  }
+
+  .highlight:not(:last-child) {
+    margin-bottom: 24px;
   }
 } 
